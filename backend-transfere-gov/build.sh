@@ -6,7 +6,7 @@ echo "Building multi-service container..."
 
 # Make sure we're in the right directory (smae root)
 if [ ! -d "vendor/backend-transfere-gov" ] || [ ! -d "vendor/backend-transfere-gov-especiais" ]; then
-    echo "Error: vendor não encontrado. Execute do diretório root"
+    echo "Error: vendor nÃ£o encontrado. Execute do diretÃ³rio root"
     exit 1
 fi
 
