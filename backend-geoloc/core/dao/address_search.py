@@ -1,7 +1,8 @@
 from .geocoder import get_geocoder
 from .geosampa import geosampa_address_query
 from core.utils.geo import geojson_envelop
-from config import MAX_ADDRESSES
+from core.utils.text import matches_city_state_country
+from config import MAX_ADDRESSES, CITY, STATE, COUNTRY_ISO, FILTER_BY_CITY
 from typing import List
 
 class AddresSearch:
@@ -12,15 +13,22 @@ class AddresSearch:
         self.geocoder = get_geocoder()
     
     def is_sp(self, address:dict)->bool:
-
-        test_city = address['properties']['cidade']=='São Paulo'
-        test_state = address['properties']['estado']=='São Paulo'
-        test_country = address['properties']['codigo_pais'].lower()=='br'
-
-        return test_city * test_state & test_country
+        """Verifica se o endereço corresponde à cidade/estado configurados"""
+        if not FILTER_BY_CITY:
+            return True
+        
+        return matches_city_state_country(
+            address.get('properties') or {},
+            CITY,
+            STATE,
+            COUNTRY_ISO,
+        )
 
     def filter_address_sp(self, address_geojson:list)->List:
-
+        """Filtra endereços pela cidade/estado configurados"""
+        if not FILTER_BY_CITY:
+            return
+        
         in_city = [add for add in address_geojson['features']
                 if self.is_sp(add)]
         address_geojson['features'] = in_city

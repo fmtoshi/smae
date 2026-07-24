@@ -146,9 +146,10 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     environment:
-      CITY: "Sao Paulo"
-      STATE: "Sao Paulo"
+      CITY: "Itapevi"
+      STATE: "São Paulo"
       COUNTRY_ISO: "BR"
+      FILTER_BY_CITY: "true"
       NOMINATIM_EMAIL: "${NOMINATIM_EMAIL}"
       GEOSAMPA_WFS_DOMAIN: "https://geoserver.slui.dev/geoserver/slui/ows"
       GEOSAMPA_API_VERSION: "1.0.0"

@@ -6,7 +6,7 @@ from typing import List
 import json
 from shapely.ops import orient
 
-from config import SAO_PAULO_WGS_BOUNDING_BOX
+from config import SAO_PAULO_WGS_BOUNDING_BOX, CITY_WGS_BOUNDING_BOX, CITY
 
 wgs_84_crs = CRS("WGS84")
 sirgas_2000_crs = CRS('epsg:31983')
@@ -117,12 +117,34 @@ def geopandas_to_geojson_dict(gdf:gpd.GeoDataFrame, epsg_num:int=None)->dict:
 
 
 def within_sao_paulo_bbox(x: float, y: float)->bool:
-
+    """Verifica se as coordenadas estão dentro do bounding box de São Paulo"""
     xmax = SAO_PAULO_WGS_BOUNDING_BOX[1][0]
     xmin = SAO_PAULO_WGS_BOUNDING_BOX[0][0]
 
     ymax = SAO_PAULO_WGS_BOUNDING_BOX[1][1]
     ymin = SAO_PAULO_WGS_BOUNDING_BOX[0][1]
+
+    return (x>=xmin and x<=xmax)and(y>=ymin and y<=ymax)
+
+def within_city_bbox(x: float, y: float)->bool:
+    """Verifica se as coordenadas estão dentro do bounding box da cidade configurada"""
+    xmax = CITY_WGS_BOUNDING_BOX[1][0]
+    xmin = CITY_WGS_BOUNDING_BOX[0][0]
+
+    ymax = CITY_WGS_BOUNDING_BOX[1][1]
+    ymin = CITY_WGS_BOUNDING_BOX[0][1]
+
+    return (x>=xmin and x<=xmax)and(y>=ymin and y<=ymax)
+
+def within_itapevi_bbox(x: float, y: float)->bool:
+    """Verifica se as coordenadas estão dentro do bounding box de Itapevi"""
+    from config import ITAPEVI_WGS_BOUNDING_BOX
+    
+    xmax = ITAPEVI_WGS_BOUNDING_BOX[1][0]
+    xmin = ITAPEVI_WGS_BOUNDING_BOX[0][0]
+
+    ymax = ITAPEVI_WGS_BOUNDING_BOX[1][1]
+    ymin = ITAPEVI_WGS_BOUNDING_BOX[0][1]
 
     return (x>=xmin and x<=xmax)and(y>=ymin and y<=ymax)
 

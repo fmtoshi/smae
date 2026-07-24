@@ -266,6 +266,11 @@ export class GeoApiService {
                 throw new HttpException('Não há resultados para a pesquisa, confira os valores informados.', 400);
             } else if (error.response.statusCode == 422) {
                 throw new HttpException(`Confira os valores informados: ${body}`, 400);
+            } else if (error.response.statusCode == 400) {
+                throw new HttpException(
+                    body || 'Coordenadas ou endereço fora da área permitida (Itapevi).',
+                    400
+                );
             }
         }
 
