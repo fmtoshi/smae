@@ -63,11 +63,18 @@ class AddressParser:
     @attr_not_found('geometry')
     def get_geom(self, feature:dict)->dict:
 
-
         geom = feature.get('geometry')
 
         if geom is None:
-            feature['geometry'] = self.build_geometry_from_lon_lat(1, 2)
+            # Nominatim reverse com format=json devolve lon/lat no root (não GeoJSON)
+            lon = feature.get('lon')
+            lat = feature.get('lat')
+            if lon is not None and lat is not None:
+                feature['geometry'] = self.build_geometry_from_lon_lat(float(lon), float(lat))
+            else:
+                raise AtributeNotFound(
+                    f'Atributo não encontrado: geometry/lon/lat: {feature}'
+                )
 
         return feature['geometry']
             
