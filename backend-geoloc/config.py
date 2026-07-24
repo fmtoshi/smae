@@ -60,10 +60,11 @@ NAMES_CAMADAS_TTL_SECONDS=load_env('NAMES_CAMADAS_TTL_SECONDS')
 #esta no formato long lat
 SAO_PAULO_WGS_BOUNDING_BOX = ((-46.809319, -23.784969), (-46.36499, -23.39566))
 
-# Bounding box de Itapevi (limites OSM + margem)
+# Bounding box de Itapevi (limites OSM + margem ampla)
 # Formato: ((longitude_min, latitude_min), (longitude_max, latitude_max))
-# Fonte aproximada OSM: S -23.603795, W -47.030183, N -23.498651, E -46.907381
-ITAPEVI_WGS_BOUNDING_BOX = ((-47.05, -23.62), (-46.89, -23.48))
+# OSM aprox.: S -23.603795, W -47.030183, N -23.498651, E -46.907381
+# Margem ampliada para cobrir bordas com Jandira/Barueri/Cotia e pontos retornados pelo Nominatim
+ITAPEVI_WGS_BOUNDING_BOX = ((-47.10, -23.66), (-46.85, -23.45))
 
 # Seleciona o bounding box baseado na cidade configurada
 if CITY.lower() == "itapevi":

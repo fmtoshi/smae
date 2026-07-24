@@ -30,11 +30,11 @@ class LatLongSearch:
     def __call__(self, x:float, y:float, convert_to_wgs_84:bool=True, **camadas)->None:
         # GeoSampa cobre a cidade de São Paulo. Fora dela (ex.: Itapevi),
         # não bloqueia o fluxo — devolve o ponto sem camadas.
-        if FILTER_BY_CITY and not within_city_bbox(x, y):
-            raise OutofBounds(f'Coordenadas devem estar dentro dos limites de {CITY}')
-
         if normalize_geo_text(CITY) not in ('sao paulo',):
             return self.format_data(x, y, {})
+
+        if FILTER_BY_CITY and not within_city_bbox(x, y):
+            raise OutofBounds(f'Coordenadas devem estar dentro dos limites de {CITY}')
 
         camadas = self.geosampa(x, y, convert_to_wgs_84, **camadas)
         data = self.format_data(x, y, camadas)
