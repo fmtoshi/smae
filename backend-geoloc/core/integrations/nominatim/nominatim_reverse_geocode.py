@@ -7,6 +7,7 @@ from core.decorators.response_parsing import json_decode_error_handling
 
 class ReverseGeocoding:
 
+
     host = 'nominatim.openstreetmap.org'
     endpoint = 'reverse'
 
@@ -16,6 +17,7 @@ class ReverseGeocoding:
         self.session = Session()
         self.build_query = ReverseQueryBuilder(contact_email)
         self.add_language_headers()
+        self.add_user_agent_header(contact_email)
 
     def build_base_url(self, host:str, endpoint:str)->str:
 
@@ -28,6 +30,13 @@ class ReverseGeocoding:
         #o que faria o codigo quebrar
 
         self.session.headers.update({'Accept-Language' : 'en-US'})
+
+    def add_user_agent_header(self, contact_email: str) -> None:
+        # Nominatim exige User-Agent identificável (política OSM)
+        # https://operations.osmfoundation.org/policies/nominatim/
+        self.session.headers.update({
+            'User-Agent': f'SMAE-Itapevi/1.0 ({contact_email})',
+        })
     
 
     @json_decode_error_handling
