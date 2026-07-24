@@ -23,10 +23,10 @@ describe('obterPropriedadeNoObjeto', () => {
     expect(resultado).toBe('Alice');
   });
 
-  it('deve retornar objeto para uma propriedade inexistente', () => {
+  it('deve retornar undefined para uma propriedade inexistente', () => {
     const objeto = { nome: 'Alice', idade: 30 };
     const resultado = obterPropriedadeNoObjeto('altura', objeto);
-    expect(resultado).toStrictEqual({ nome: 'Alice', idade: 30 });
+    expect(resultado).toBeUndefined();
   });
 
   it('deve retornar o objeto pai para uma propriedade aninhada inexistente', () => {
@@ -44,7 +44,7 @@ describe('obterPropriedadeNoObjeto', () => {
   it('deve lidar com objetos vazios', () => {
     const objeto = {};
     const resultado = obterPropriedadeNoObjeto('nome', objeto);
-    expect(resultado).toStrictEqual({});
+    expect(resultado).toBeUndefined();
   });
 
   it('deve lidar com objetos nulos', () => {
@@ -65,6 +65,6 @@ describe('obterPropriedadeNoObjeto', () => {
     const objeto = { nome: 'Alice', idade: 30 };
     const resultado = obterPropriedadeNoObjeto('altura', objeto, true);
     expect(consoleSpyOnWarning).not.toHaveBeenCalled();
-    expect(resultado).toStrictEqual({ nome: 'Alice', idade: 30 });
+    expect(resultado).toBeUndefined();
   });
 });
